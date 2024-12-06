@@ -1,31 +1,34 @@
-import { useState } from 'react'
-import Header from './components/Header';
-import Main from './components/Main';
-import Footer from './components/Footer';
-import './App.css'
-import Button from "./components/Button"; 
+import "./App.css";
+import { useState } from "react";
 
 function App() {
-
-  const buttonProps = {
-    text:"mail",
-    color:"red",
-    a:1,
-    b:2,
-    c:3,
-  }
+  // 1: 초기값  2:상태변화 함수
+  // 보통 구조분해해서 할당 받음
+  const [count, setCount] = useState(1);
+  const [light, setLight] = useState("OFF");
 
   return (
     <>
-    {/* 스프레드로 props 보내주기 */}
-    <Button  {...buttonProps}/>
-    <Button text={"카페"}/>
-    <Button text={"블로그"}> 
-      <div>Chidlren</div>
-    </Button>
-
+      <div>
+        <h1>{light}</h1>
+        <button
+          onClick={() => {
+            setLight(light === "ON" ? "OFF" : "ON");
+          }}
+        >
+          {light === "ON" ? "OFF" : "ON"}
+        </button>
+      </div>
+      <h1>{count}</h1>
+      <button
+        onClick={() => {
+          setCount(count + 1);
+        }}
+      >
+        +
+      </button>
     </>
-  )
+  );
 }
 
 export default App;
