@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRef } from "react";
 
 const Register = () => {
   const [input, setInput] = useState({
@@ -8,7 +9,12 @@ const Register = () => {
     bio: "",
   });
 
+  const countRef = useRef(0);
+  const inputRef = useRef();
+
   const onChange = (e) => {
+    countRef.current++;
+    console.log(countRef.current);
     setInput({
       ...input,
       //통합시킴 프로퍼티 키 e.target.name => [변수] => 키로서 설정됨
@@ -17,11 +23,19 @@ const Register = () => {
     });
   };
 
+  const onSubmit = () => {
+    if (input.name === "") {
+      //이름을 입력하는 DOM요소 포커스
+      inputRef.current.focus();
+    }
+  };
+
   return (
     <div>
       {/* 입력값이 e라는 매개변수로 이벤트에 들어가서 확인 가능  */}
       <div>
         <input
+          ref={inputRef} // 객체 접근하기 위해서 ref를 사용
           name="name"
           value={input.name}
           onChange={onChange}
@@ -53,6 +67,7 @@ const Register = () => {
         <textarea name="bio" value={input.bio} onChange={onChange} />
         {input.bio}
       </div>
+      <button onClick={onSubmit}>submit</button>
     </div>
   );
 };
