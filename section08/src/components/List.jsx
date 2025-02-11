@@ -1,6 +1,6 @@
 import "./List.css";
 import ToDoItem from "./ToDoItem";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const List = ({ todos, onUpdate, onDelete }) => {
   const [search, setSearch] = useState("");
@@ -20,9 +20,30 @@ const List = ({ todos, onUpdate, onDelete }) => {
 
   const filteredTodos = getFilteredData();
 
+  // 의존성 배열 : deps
+  // 콜백함수를 반화해서 변수로 사용 가능 , 결과를 두번째 파라미터 배열에 넣어줌 한 번만 !
+  const { totalCount, doneCount, notDoneCount } = useMemo(() => {
+    const totalCount = todos.length;
+    const doneCount = todos.filter((todo) => todo.isDone).length;
+    const notDoneCount = totalCount - doneCount;
+
+    return {
+      totalCount,
+      doneCount,
+      notDoneCount,
+    };
+  }, [todos]);
+
+  // const { totalCount, doneCount, notDoneCount } = getAnalyzedData();
+
   return (
     <div className="List">
       <h4>Todo List 🎯</h4>
+
+      <div> total : {totalCount}</div>
+      <div> done : {doneCount}</div>
+      <div> notDone : {notDoneCount}</div>
+
       <input
         value={search}
         onChange={onChangeSearch}

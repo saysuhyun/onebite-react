@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Editor from "./components/Editor";
 import List from "./components/List";
 import Exam from "./components/Exam";
-import { userState, useState, useRef, useReducer } from "react";
+import { userState, useState, useRef, useReducer, useCallback } from "react";
 
 const mockData = [
   {
@@ -46,7 +46,7 @@ function App() {
   const [todos, dispatch] = useReducer(reducer, mockData);
   const idRef = useRef(3); // id 용
 
-  const onCreate = (content) => {
+  const onCreate = useCallback((content) => {
     dispatch({
       type: "CREATE",
       data: {
@@ -56,21 +56,22 @@ function App() {
         date: new Date().getTime(),
       },
     });
-  };
+  }, []);
 
-  const onUpdate = (targetId) => {
+  const onUpdate = useCallback((targetId) => {
     dispatch({
       type: "UPDATE",
       targetId: targetId,
     });
-  };
+  }, []);
 
-  const onDelete = (targetId) => {
+  // 함수 메모제이션 마운트 될 때만 생성되고 리랜더링 안 됨
+  const onDelete = useCallback((targetId) => {
     dispatch({
       type: "DELETE",
       targetId: targetId,
     });
-  };
+  }, []);
 
   return (
     <div className="App">
