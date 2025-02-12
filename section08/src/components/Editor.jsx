@@ -1,7 +1,10 @@
 import "./Editor.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
+import { TodoDispatchContext } from "../App";
+const Editor = () => {
+  // context를 연결 시켜서 쓸 수 있도록
+  const { onCreate } = useContext(TodoDispatchContext);
 
-const Editor = ({ onCreate }) => {
   // 내용 상태 보관용
   const [content, setContent] = useState("");
   const contentRef = useRef();

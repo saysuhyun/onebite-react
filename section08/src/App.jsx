@@ -3,7 +3,15 @@ import Header from "./components/Header";
 import Editor from "./components/Editor";
 import List from "./components/List";
 import Exam from "./components/Exam";
-import { userState, useState, useRef, useReducer, useCallback } from "react";
+import {
+  userState,
+  useState,
+  useRef,
+  useReducer,
+  useCallback,
+  createContext,
+  useMemo,
+} from "react";
 
 const mockData = [
   {
@@ -41,6 +49,10 @@ function reducer(state, action) {
   }
 }
 
+//App 밖에 놔두는게 새로 안 생성되고 밖에 빼두는 것이 좋음
+export const TodoStateContext = createContext();
+export const TodoDispatchContext = createContext();
+
 function App() {
   //const [todos, setTodos] = useState(mockData);
   const [todos, dispatch] = useReducer(reducer, mockData);
@@ -73,11 +85,29 @@ function App() {
     });
   }, []);
 
+  const memoizedDispatch = useMemo(() => {
+    return { onCreate, onUpdate, onDelete };
+  }, []);
+
+  // TodoContext.Provider로 감싸져 있는 부분의 컴포넌트들은 context에 접근 가능
+  // 해당 컨텍스트 하위에 있는Editor , List, TodoItem 컴포넌트는 context에 등록된 value를 쓰기 가능
   return (
     <div className="App">
       <Header />
-      <Editor onCreate={onCreate} />
-      <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+      <TodoStateContext.Provider
+        value={{
+          todos,
+        }}
+      >
+        <TodoDispatchContext.Provider
+          value={{
+            memoizedDispatch,
+          }}
+        >
+          <Editor />
+          <List />
+        </TodoDispatchContext.Provider>
+      </TodoStateContext.Provider>
     </div>
   );
 }
