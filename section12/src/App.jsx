@@ -6,33 +6,39 @@ import Diary from "./pages/Diary";
 import New from "./pages/New";
 import NotFound from "./pages/NotFound";
 
-import { getEmotionImage } from "./util/get-emotion-image";
-
+import Button from "./components/Button";
+import Header from "./components/Header";
 // 1. "/" : 모든 일기 조회 home page
 // 2. "/new" : 새로운 일기 작성
 // 3. "/diary" : 일기 상세 조회
 function App() {
-  const nav = useNavigate();
-  // 특정 조건에 따라 페이지 이동시 useNavigate 사용
-  const onClickButton = () => {
-    nav("/new");
-  };
   return (
     <>
-      <div>
-        <img src={getEmotionImage(1)} />
-        <img src={getEmotionImage(2)} />
-        <img src={getEmotionImage(3)} />
-        <img src={getEmotionImage(4)} />
-        <img src={getEmotionImage(5)} />
-      </div>
-
-      <div>
-        <Link to={"/"}> Home </Link>
-        <Link to={"/diary"}> Diary </Link>
-        <Link to={"/new"}> New </Link>
-      </div>
-      <button onClick={onClickButton}>New 페이지 이동</button>
+      <Header
+        title={"Header"}
+        leftChild={<Button text={"Left"} />}
+        rightChild={<Button text={"Right"} />}
+      />
+      <Button
+        text={123}
+        onClick={() => {
+          console.log("123");
+        }}
+      />
+      <Button
+        text={123}
+        type={"POSITIVE"}
+        onClick={() => {
+          console.log("123");
+        }}
+      />
+      <Button
+        text={123}
+        type={"NEGATIVE"}
+        onClick={() => {
+          console.log("123");
+        }}
+      />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/diary/:id" element={<Diary />} />
