@@ -5,6 +5,9 @@ import Home from "./pages/Home";
 import Diary from "./pages/Diary";
 import New from "./pages/New";
 import NotFound from "./pages/NotFound";
+
+import { getEmotionImage } from "./util/get-emotion-image";
+
 // 1. "/" : 모든 일기 조회 home page
 // 2. "/new" : 새로운 일기 작성
 // 3. "/diary" : 일기 상세 조회
@@ -16,6 +19,14 @@ function App() {
   };
   return (
     <>
+      <div>
+        <img src={getEmotionImage(1)} />
+        <img src={getEmotionImage(2)} />
+        <img src={getEmotionImage(3)} />
+        <img src={getEmotionImage(4)} />
+        <img src={getEmotionImage(5)} />
+      </div>
+
       <div>
         <Link to={"/"}> Home </Link>
         <Link to={"/diary"}> Diary </Link>
