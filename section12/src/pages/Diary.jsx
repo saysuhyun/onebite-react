@@ -4,9 +4,12 @@ import Button from "../components/Button";
 import Viwer from "../components/Viewer";
 import useDiary from "../hooks/useDiary";
 import { getStringedDate } from "../util/getStringdDate";
+import usePageTitle from "../hooks/usePageTitle";
+
 const Diary = () => {
   const params = useParams();
   const nav = useNavigate();
+  usePageTitle(`${params.id}번 일기`);
   const curDiaryItem = useDiary(params.id);
 
   if (!curDiaryItem) {
@@ -15,6 +18,7 @@ const Diary = () => {
 
   const { createdDate, emotionId, content } = curDiaryItem;
   const title = getStringedDate(new Date(createdDate));
+
   return (
     <div>
       <Header
