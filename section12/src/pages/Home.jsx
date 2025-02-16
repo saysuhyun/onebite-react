@@ -40,7 +40,6 @@ const Home = () => {
   const onDecreaseMonth = () => {
     setPivotDate(new Date(pivotDate.getFullYear(), pivotDate.getMonth() - 1));
   };
-  console.log(monthlyData);
   return (
     <div>
       <Header
