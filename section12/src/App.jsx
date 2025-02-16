@@ -11,15 +11,21 @@ import { useReducer, useRef, createContext } from "react";
 const mockData = [
   {
     id: 1,
-    createDate: new Date().getTime(),
+    createdDate: new Date("2025-02-15").getTime(),
     emotionId: 1,
     content: "1번 일기 내용",
   },
   {
     id: 2,
-    createDate: new Date().getTime(),
+    createdDate: new Date("2025-02-14").getTime(),
     emotionId: 2,
     content: "2번 일기 내용",
+  },
+  {
+    id: 3,
+    createdDate: new Date("2025-01-30").getTime(),
+    emotionId: 3,
+    content: "3번 일기 내용",
   },
 ];
 
@@ -38,8 +44,8 @@ function reducer(state, action) {
   }
 }
 
-const DiaryStateContext = createContext();
-const DiaryDispatchContext = createContext();
+export const DiaryStateContext = createContext();
+export const DiaryDispatchContext = createContext();
 
 // 1. "/" : 모든 일기 조회 home page
 // 2. "/new" : 새로운 일기 작성
@@ -83,14 +89,6 @@ function App() {
 
   return (
     <>
-      <button onClick={() => onCreate(new Date().getTime(), 1, "ee")}>
-        일기 추가 테스트
-      </button>
-      <button onClick={() => onUpdate(1, new Date().getTime(), 2, "new Time")}>
-        일기 수정 테스트
-      </button>
-      <button onClick={() => onDelete(1)}>일기 삭제 테스트</button>
-
       <DiaryStateContext.Provider value={data}>
         <DiaryDispatchContext.Provider
           value={{
